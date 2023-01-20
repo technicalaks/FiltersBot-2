@@ -467,7 +467,7 @@ async def requests(bot, message):
 
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{message.link}"),
-                InlineKeyboardButton('Show Options', callback_data=f'show_option#{user_id}')
+                InlineKeyboardButton('Show Options', callback_data=f'show_option')
             ]]
             request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
             btns = [[
