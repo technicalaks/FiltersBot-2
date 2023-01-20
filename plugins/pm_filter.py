@@ -136,7 +136,7 @@ async def next_page(bot, query):
             [InlineKeyboardButton(f"🗓 PAGES {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
              InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")])
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")])
+            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")])
     else:
         btn.append(
             [
@@ -147,7 +147,7 @@ async def next_page(bot, query):
         )
         btn.append(
             [
-                InlineKeyboardButton("❌ Close ❌", callback_data="close_data")
+                InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")
             ]
         )
     try:
@@ -913,14 +913,14 @@ async def auto_filter(client, msg, spoll=False):
              InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")]
         )
     else:
         btn.append(
             [InlineKeyboardButton(text="🗓 PAGES 1 / 1", callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     if imdb:
@@ -982,7 +982,7 @@ async def advantage_spell_chok(msg):
     search = msg.text
     search_google = search.replace(" ", "+")
     query = re.sub(
-        r"#|\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
+        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
         "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
     query = query.strip() + " movie"
     g_s = await search_gagala(query)
@@ -998,10 +998,10 @@ async def advantage_spell_chok(msg):
     regex = re.compile(r".*(imdb|wikipedia).*", re.IGNORECASE)  # look for imdb / wiki results
     gs = list(filter(regex.match, g_s))
     gs_parsed = [re.sub(
-        r'#|\b(\-([a-zA-Z-\s])\-\simdb|(\-\s)?imdb|(\-\s)?wikipedia|\(|\)|\-|reviews|full|all|episode(s)?|film|movie|series)',
+        r'\b(\-([a-zA-Z-\s])\-\simdb|(\-\s)?imdb|(\-\s)?wikipedia|\(|\)|\-|reviews|full|all|episode(s)?|film|movie|series)',
         '', i, flags=re.IGNORECASE) for i in gs]
     if not gs_parsed:
-        reg = re.compile(r"#|watch(\s[a-zA-Z0-9_\s\-\(\)]*)*\|.*",
+        reg = re.compile(r"watch(\s[a-zA-Z0-9_\s\-\(\)]*)*\|.*",
                          re.IGNORECASE)  # match something like Watch Niram | Amazon Prime
         for mv in g_s:
             match = reg.match(mv)
@@ -1017,7 +1017,7 @@ async def advantage_spell_chok(msg):
             imdb_s = await get_poster(mov.strip(), bulk=True)  # searching each keyword in imdb
             if imdb_s:
                 movielist += [movie.get('title') for movie in imdb_s]
-    movielist += [(re.sub(r'#|(\-|\(|\)|_)', '', i, flags=re.IGNORECASE)).strip() for i in gs_parsed]
+    movielist += [(re.sub(r'(\-|\(|\)|_)', '', i, flags=re.IGNORECASE)).strip() for i in gs_parsed]
     movielist = list(dict.fromkeys(movielist))  # removing duplicates
     if not movielist:
         btn = [[InlineKeyboardButton("🔎 Search Google 🔍", url=f"https://www.google.com/search?q={search_google}")]]
