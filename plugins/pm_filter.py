@@ -832,11 +832,24 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("ua_alert"):
         ident, from_user = query.data.split("#")
-        userid = query.from_user.id
-        if userid in from_user:
-            await query.answer("Yᴏᴜʀ Rᴇᴏ̨ᴜᴇsᴛ ɪs Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ !", show_alert=True)
+        if str(query.from_user.id) in from_user:
+            await query.answer("Sorry your request is unavailable!", show_alert=True)
         else:
-            await query.answer("not your!", show_alert=True)
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("ul_alert"):
+        ident, from_user = query.data.split("#")
+        if str(query.from_user.id) in from_user:
+            await query.answer("Your request is uploaded!", show_alert=True)
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("aa_alert"):
+        ident, from_user = query.data.split("#")
+        if str(query.from_user.id) in from_user:
+            await query.answer("Your request is already available!", show_alert=True)
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
 
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
