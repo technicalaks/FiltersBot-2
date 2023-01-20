@@ -749,7 +749,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("❌ Not Available ❌", callback_data=f"notavailable#{from_user}")
+            InlineKeyboardButton("❌ Not Available ❌", callback_data=f"not_available#{from_user}")
         ],[
             InlineKeyboardButton("⚡️ Uploaded ⚡️", callback_data=f"uploaded#{from_user}")
         ],[
@@ -761,7 +761,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
-    elif query.data.startswith("notavailable"):
+    elif query.data.startswith("not_available"):
         ident, from_user = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
