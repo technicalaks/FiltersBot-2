@@ -62,7 +62,7 @@
             "required": false
         },
         "SUPPORT_GROUP": {
-            "description": "Bot support group. Give a channel id with -100xxxxxxx",
+            "description": "Give bot support group id.",
             "required": false
         },
         "DATABASE_URI": {
