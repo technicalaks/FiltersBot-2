@@ -461,18 +461,17 @@ async def settings(client, message):
 async def requests(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         try:
-            user_id = message.from_user.id
+            user_id = str(message.from_user.id)
             message = message.text.split(" ", 1)[1]
 
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{message.link}"),
-                InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
+                InlineKeyboardButton('Show Options', callback_data=f'show_option#{user_id}')
             ]]
             request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{request.link}")
             ]]
             await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btn))
-            return
         except:
             await message.reply_text("Use correct format.\n\nEx: <code>#request your_request</code>")
