@@ -832,7 +832,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("ua_alert"):
         ident, from_user = query.data.split("#")
-        if str(query.from_user.id) in from_user:
+        userid = query.from_user.id
+        if userid in from_user:
             await query.answer("Yᴏᴜʀ Rᴇᴏ̨ᴜᴇsᴛ ɪs Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ !", show_alert=True)
         else:
             await query.answer("not your!", show_alert=True)
