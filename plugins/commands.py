@@ -473,5 +473,6 @@ async def requests(bot, message):
                 InlineKeyboardButton('View Request', url=f"{request.link}")
             ]]
             await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btn))
+            return
         except:
             await message.reply_text("Use correct format.\n\nEx: <code>#request your_request</code>")
