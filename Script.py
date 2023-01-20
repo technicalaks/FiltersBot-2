@@ -24,21 +24,22 @@ I will take care of the rest. 😎"""
 ★ Free Storage: <code>{}</code>"""
 
     NEW_GROUP_TXT = """#NewGroup
-Title: {}
-ID: <code>{}</code>
-Total Members: {}
-Added by: {}"""
+★ Title: {}
+★ ID: <code>{}</code>
+★ Total Members: {}
+★ Added by: {}"""
 
     NEW_USER_TXT = """#NewUser
-Name: {}
-ID: <code>{}</code>"""
+★ Name: {}
+★ ID: <code>{}</code>"""
 
     NO_RESULT_TXT = """#NoResult
-Group Name: {}
-Group ID: <code>{}</code>
-Name: {}
-Message: {}"""
+★ Group Name: {}
+★ Group ID: <code>{}</code>
+★ Name: {}
+★ Message: {}"""
 
-    REQUEST_TXT = """Name: {}
-ID: <code>{}</code>
-Message: {}"""
+    REQUEST_TXT = """★ Name: {}
+★ ID: <code>{}</code>
+
+★ Message: {}"""
