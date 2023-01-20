@@ -766,7 +766,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable_alert#{from_user}")
+            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unalert#{from_user}")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
@@ -830,7 +830,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
-    elif query.data.startswith("unavailable_alert"):
+    elif query.data.startswith("unalert"):
         ident, from_user = query.data.split("#")
         if query.from_user.id == from_user:
             await query.answer(f"Hᴇʏ {user.first_name}, Yᴏᴜʀ Rᴇᴏ̨ᴜᴇsᴛ ɪs Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ !", show_alert=True)
