@@ -459,9 +459,8 @@ async def settings(client, message):
              
 @Client.on_message((filters.command(["request", "Request"]) | filters.regex("#request") | filters.regex("#Request")) & filters.group)
 async def requests(bot, message):
-    if message.chat.id:
-        chat_id = message.chat.id
-        reporter = str(message.from_user.id)
+    try:
+        reporter = message.from_user.id
         mention = message.from_user.mention
         content = message.text.split(" ", 1)[1]
     
@@ -470,7 +469,7 @@ async def requests(bot, message):
             InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
         ]]
         await bot.send_message(chat_id=REQUEST_CHANNEL, text=f"<b>𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})\n\n𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {content}</b>", reply_markup=InlineKeyboardMarkup(btn))
-    else:
+    except:
         await message.reply_text("<b>Your request has been added! Please wait for some time.</b>")
 
 
