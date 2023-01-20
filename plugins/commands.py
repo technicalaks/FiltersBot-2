@@ -458,21 +458,16 @@ async def settings(client, message):
 
              
 @Client.on_message(filters.regex("#request"))
-async def requests(bot, message):
+async def send_request(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        try:
-            message = message.text.split(" ", 1)[1]
-        except:
-            await message.reply_text("use correct format")
-            return
-
-            btn = [[
-                InlineKeyboardButton('View Request', url=f"{message.link}"),
-                InlineKeyboardButton('Show Options', callback_data=f'show_option')
-            ]]
-            request = await bot.send_message(LOG_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
-            btns = [[
-                InlineKeyboardButton('View Request', url=f"{request.link}")
-            ]]
-            await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btns))
+        message = message.text.split(" ", 1)[1]
+        btn = [[
+            InlineKeyboardButton('View Request', url=f"{message.link}"),
+            InlineKeyboardButton('Show Options', callback_data=f'show_option')
+        ]]
+        request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
+        btns = [[
+            InlineKeyboardButton('View Request', url=f"{request.link}")
+        ]]
+        await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btns))
         
