@@ -509,11 +509,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('🏠 Home 🏠', callback_data='start')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=script.MY_ABOUT_TXT.format(temp.U_NAME, temp.B_NAME),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
+        await query.message.edit_reply_markup(reply_markup)
+
     elif query.data == "my_owner":
         buttons = [[
             InlineKeyboardButton('🏠 Home 🏠', callback_data='start')
