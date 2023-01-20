@@ -766,7 +766,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable_alert")
+            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable_alert#{from_user}")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
