@@ -9,8 +9,8 @@ I will take care of the rest. 😎"""
 
     MY_ABOUT_TXT = """★ Server: <a href=https://www.heroku.com>Heroku</a>
 ★ Database: <a href=https://www.mongodb.com>MongoDB</a>
-★ Language: <a href=https://www.python.org/>Python</a>
-★ Library: <a href=https://pyrogram.org/>Pyrogram</a>"""
+★ Language: <a href=https://www.python.org>Python</a>
+★ Library: <a href=https://pyrogram.org>Pyrogram</a>"""
 
     MY_OWNER_TXT = """★ Name: Hansaka Anuhas
 ★ Username: @Hansaka_Anuhas
