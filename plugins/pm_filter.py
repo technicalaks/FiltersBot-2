@@ -67,10 +67,6 @@ async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
     if int(req) not in [query.from_user.id, 0]:
         return await query.answer(f"Hello {query.from_user.first_name},\nDon't Click Other Results!", show_alert=True)
-    if offset == "closeresults":
-        await query.answer("Closed Results!")
-        await query.message.reply_to_message.delete()
-        return await query.message.delete()
     try:
         offset = int(offset)
     except:
@@ -129,14 +125,14 @@ async def next_page(bot, query):
                                   callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
         )
     elif off_set is None:
         btn.append(
             [InlineKeyboardButton(f"🗓 PAGES {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
              InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")])
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")])
+            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")])
     else:
         btn.append(
             [
@@ -147,7 +143,7 @@ async def next_page(bot, query):
         )
         btn.append(
             [
-                InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")
+                InlineKeyboardButton("❌ Close ❌", callback_data="close_data")
             ]
         )
     try:
@@ -913,14 +909,14 @@ async def auto_filter(client, msg, spoll=False):
              InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data=f"next_{req}_closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
         )
     else:
         btn.append(
             [InlineKeyboardButton(text="🗓 PAGES 1 / 1", callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data=f"next_{req}_closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     if imdb:
