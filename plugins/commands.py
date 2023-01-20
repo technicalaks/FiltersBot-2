@@ -463,7 +463,7 @@ async def requests(bot, message):
         chat_id = message.chat.id
         reporter = str(message.from_user.id)
         mention = message.from_user.mention
-        content = message.text
+        content = message.text.split(" ", 1)[1]
     
         btn = [[
             InlineKeyboardButton('View Request', url=f"{message.link}"),
