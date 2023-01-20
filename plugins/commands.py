@@ -460,7 +460,7 @@ async def settings(client, message):
 @Client.on_message(filters.regex("#request"))
 async def send_request(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        message = message.text.split(" ", 1)[1]
+        message = message.text
         btn = [[
             InlineKeyboardButton('View Request', url=f"{message.link}"),
             InlineKeyboardButton('Show Options', callback_data=f'show_option')
