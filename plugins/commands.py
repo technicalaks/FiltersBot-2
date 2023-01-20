@@ -460,14 +460,14 @@ async def settings(client, message):
 @Client.on_message(filters.regex("#request"))
 async def send_request(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        message = message.text
+        request = message.text
         btn = [[
             InlineKeyboardButton('View Request', url=f"{message.link}"),
             InlineKeyboardButton('Show Options', callback_data=f'show_option')
         ]]
-        request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
+        sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(btn))
         btns = [[
-            InlineKeyboardButton('View Request', url=f"{request.link}")
+            InlineKeyboardButton('View Request', url=f"{sent_request.link}")
         ]]
         await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btns))
         
