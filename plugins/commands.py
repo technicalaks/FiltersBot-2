@@ -463,7 +463,7 @@ async def send_request(bot, message):
         if message.chat.id == SUPPORT_GROUP:
             user_id = message.from_user.id
             try:
-                request = message.text.split(" ", 1)[1] # Extracting message from hashtag
+                request = message.text.split(" ", 1)[1] # extracting message from hashtag
             except:
                 await message.reply_text("Use correct format.\n<code>#request your_request</code>")
                 return
@@ -484,3 +484,8 @@ async def send_request(bot, message):
                 InlineKeyboardButton('Support Chat', url=SUPPORT_CHAT)
             ]]
             await message.reply_text("This chat not allow your request! Please join 'Support Chat' group and request.", reply_markup=InlineKeyboardMarkup(btns))
+    else:
+        btn = [[
+            InlineKeyboardButton('Support Chat', url=SUPPORT_CHAT)
+        ]]
+        await message.reply_text("This chat not allow your request! Please join 'Support Chat' group and request.", reply_markup=InlineKeyboardMarkup(btn))
