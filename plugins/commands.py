@@ -474,4 +474,4 @@ async def requests(bot, message):
             ]]
             await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btn))
         except:
-            await message.reply_text("Use correct format.\n\nEx: <code>#request your_request</code>")
+            pass
