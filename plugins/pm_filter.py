@@ -744,7 +744,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("Changed!")
             await query.message.edit_reply_markup(reply_markup)
 
-    elif query.data.startswith("show_option"):
+    elif query.data.startswith("show_options"):
         ident, from_user = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
