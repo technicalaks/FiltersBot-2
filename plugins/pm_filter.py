@@ -913,7 +913,7 @@ async def auto_filter(client, msg, spoll=False):
              InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="next#closeresults")]
         )
     else:
         btn.append(
