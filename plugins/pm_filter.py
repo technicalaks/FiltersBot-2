@@ -766,7 +766,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unalert#{from_user}")
+            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable_alert#{from_user}")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
@@ -778,9 +778,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_text(f"<strike>{message}</strike>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
-                await client.send_message(from_user, text="Sorry your request unavailable!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(from_user, text="Sorry your request is unavailable!", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request unavailable!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request is unavailable!", reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
@@ -801,9 +801,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_text(f"<strike>{message}</strike>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
-                await client.send_message(from_user, text="Your request is uploaded!", reply_markup=InlineKeyboardMarkup(btn2))
+                await client.send_message(from_user, text="Your request is uploaded!", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded!", reply_markup=InlineKeyboardMarkup(btn2))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded!", reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
@@ -830,12 +830,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
-    elif query.data.startswith("unalert"):
-        ident, from_user = query.data.split("#")
-        if int(query.from_user.id) == int(from_user):
-            await query.answer(f"Hᴇʏ {user.first_name}, Yᴏᴜʀ Rᴇᴏ̨ᴜᴇsᴛ ɪs Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ !", show_alert=True)
-        else:
-            await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
+    elif query.data.startswith("unavailable_alert"):
+        await query.answer("Yᴏᴜʀ Rᴇᴏ̨ᴜᴇsᴛ ɪs Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ !", show_alert=True)
+
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
         message = msg
