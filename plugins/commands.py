@@ -8,7 +8,7 @@ from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, REQUEST_CHANNEL, LOG_CHANNEL, STICKERS, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, SUPPORT_GROUP, REQUEST_CHANNEL, LOG_CHANNEL, STICKERS, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT
 from utils import get_settings, get_size, is_subscribed, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
@@ -459,7 +459,7 @@ async def settings(client, message):
              
 @Client.on_message((filters.command(["request", "Request"]) | filters.regex("#request") | filters.regex("#Request")) & filters.group)
 async def requests(bot, message):
-    if message.reply_to_message and SUPPORT_CHAT_ID == message.chat.id:
+    if message.reply_to_message and SUPPORT_GROUP == message.chat.id:
         chat_id = message.chat.id
         reporter = str(message.from_user.id)
         mention = message.from_user.mention
@@ -490,7 +490,7 @@ async def requests(bot, message):
             await message.reply_text(f"Error: {e}")
             pass
         
-    elif SUPPORT_CHAT_ID == message.chat.id:
+    elif SUPPORT_GROUP == message.chat.id:
         chat_id = message.chat.id
         reporter = str(message.from_user.id)
         mention = message.from_user.mention
