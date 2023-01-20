@@ -461,6 +461,7 @@ async def settings(client, message):
 async def send_request(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         if message.chat.id == SUPPORT_GROUP:
+            user_id = message.from_user.id
             try:
                 request = message.text.split(" ", 1)[1] # Extracting message from hashtag
             except:
@@ -469,7 +470,7 @@ async def send_request(bot, message):
 
             buttons = [[
                 InlineKeyboardButton('View Request', url=f"{message.link}"),
-                InlineKeyboardButton('Show Options', callback_data=f'show_option')
+                InlineKeyboardButton('Show Options', callback_data=f'show_option#{user_id}')
             ]]
             sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
             
