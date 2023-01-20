@@ -67,7 +67,7 @@ async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
     if int(req) not in [query.from_user.id, 0]:
         return await query.answer(f"Hello {query.from_user.first_name},\nDon't Click Other Results!", show_alert=True)
-    if req == "closeresults":
+    if offset == "closeresults":
         await query.answer("Closed Results!")
         await query.message.reply_to_message.delete()
         return await query.message.delete()
@@ -913,14 +913,14 @@ async def auto_filter(client, msg, spoll=False):
              InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data=f"next_{req}_closeresults")]
         )
     else:
         btn.append(
             [InlineKeyboardButton(text="🗓 PAGES 1 / 1", callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data=f"next_{req}_closeresults")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     if imdb:
