@@ -469,7 +469,7 @@ async def requests(bot, message):
                 InlineKeyboardButton('View Request', url=f"{message.link}"),
                 InlineKeyboardButton('Show Options', callback_data=f'show_option')
             ]]
-            request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
+            request = await bot.send_message(LOG_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
             btns = [[
                 InlineKeyboardButton('View Request', url=f"{request.link}")
             ]]
