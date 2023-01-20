@@ -469,9 +469,9 @@ async def requests(bot, message):
                 InlineKeyboardButton('Show Options', callback_data=f'show_option#{user_id}')
             ]]
             request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, message), reply_markup=InlineKeyboardMarkup(btn))
-            btn = [[
+            btns = [[
                 InlineKeyboardButton('View Request', url=f"{request.link}")
             ]]
-            await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btn))
+            await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btns))
         except:
-            pass
+            await message.reply_text("use correct format")
