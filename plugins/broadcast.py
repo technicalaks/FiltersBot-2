@@ -11,7 +11,7 @@ async def users_broadcast(bot, message):
     users = await db.get_all_users()
     b_msg = message.reply_to_message
     sts = await message.reply_text(
-        text='Broadcasting your messages...'
+        text='Broadcasting your users messages...'
     )
     start_time = time.time()
     total_users = await db.total_users_count()
@@ -45,7 +45,7 @@ async def groups_broadcast(bot, message):
     chats = await db.get_all_chats()
     b_msg = message.reply_to_message
     sts = await message.reply_text(
-        text='Broadcasting your messages...'
+        text='Broadcasting your groups messages...'
     )
     start_time = time.time()
     total_chats = await db.total_chat_count()
