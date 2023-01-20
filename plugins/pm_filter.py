@@ -749,7 +749,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable#{from_user}")
+            InlineKeyboardButton("❌ Not Available ❌", callback_data=f"notavailable#{from_user}")
         ],[
             InlineKeyboardButton("⚡️ Uploaded ⚡️", callback_data=f"uploaded#{from_user}")
         ],[
@@ -761,12 +761,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
-    elif query.data.startswith("unavailable"):
+    elif query.data.startswith("notavailable"):
         ident, from_user = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"ua_alert#{from_user}")
+            InlineKeyboardButton("❌ Not Available ❌", callback_data=f"na_alert#{from_user}")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
@@ -830,10 +830,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
-    elif query.data.startswith("ua_alert"):
+    elif query.data.startswith("na_alert"):
         ident, from_user = query.data.split("#")
         if str(query.from_user.id) in from_user:
-            await query.answer("Sorry your request is unavailable!", show_alert=True)
+            await query.answer("Sorry your request is not available!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
