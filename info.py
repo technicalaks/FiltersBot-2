@@ -29,9 +29,11 @@ AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 auth_channel = environ.get('AUTH_CHANNEL', '')
 auth_grp = environ.get('AUTH_GROUP')
 support_group = environ.get('SUPPORT_GROUP', '')
+request_channel = environ.get('REQUEST_CHANNEL', '')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 SUPPORT_GROUP = int(support_group) if support_group and id_pattern.search(support_group) else None
+REQUEST_CHANNEL int(request_channel) if support_group and id_pattern.search(request_channel) else None
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "")
@@ -39,7 +41,6 @@ DATABASE_NAME = environ.get('DATABASE_NAME', "Cluster0")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Files')
 
 # Others
-REQUEST_CHANNEL = int(environ.get('REQUEST_CHANNEL', ''))
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', ''))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'https://t.me/SL_Filters_Bot_Support')
 P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "True")), True)
