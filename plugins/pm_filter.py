@@ -67,6 +67,10 @@ async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
     if int(req) not in [query.from_user.id, 0]:
         return await query.answer(f"Hello {query.from_user.first_name},\nDon't Click Other Results!", show_alert=True)
+    if req == "closeresults":
+        await query.answer("Closed Results!")
+        await query.message.reply_to_message.delete()
+        return await query.message.delete()
     try:
         offset = int(offset)
     except:
@@ -125,7 +129,7 @@ async def next_page(bot, query):
                                   callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")]
         )
     elif off_set is None:
         btn.append(
