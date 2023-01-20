@@ -36,8 +36,13 @@ async def give_filter(client, message):
             await auto_filter(client, message)
     else:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
+            try:
+                invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
+            except ChatAdminRequired:
+                logger.error("Make sure Bot is admin in Forcesub channel")
+                return
             buttons = [[
-                InlineKeyboardButton("📢 Updates Channel 📢", url='https://t.me/SL_Filters_Bot_Updates')
+                InlineKeyboardButton("📢 Updates Channel 📢", url=invite_link.invite_link
             ],[
                 InlineKeyboardButton("🔁 Request Again 🔁", callback_data="grp_checksub")
             ]]
@@ -509,8 +514,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('🏠 Home 🏠', callback_data='start')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
-        return await query.message.edit_reply_markup(reply_markup)
-
+        await query.message.edit_text(
+            text=script.MY_ABOUT_TXT,
+            reply_markup=reply_markup,
+            parse_mode=enums.ParseMode.HTML
+        )
     elif query.data == "my_owner":
         buttons = [[
             InlineKeyboardButton('🏠 Home 🏠', callback_data='start')
