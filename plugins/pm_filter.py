@@ -743,27 +743,30 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup = InlineKeyboardMarkup(buttons)
             await query.answer("Changed!")
             await query.message.edit_reply_markup(reply_markup)
+
     elif query.data.startswith("show_option"):
         ident, from_user = query.data.split("#")
+        buttons = [[
+            InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable#{from_user}")
+        ],[
+            InlineKeyboardButton("⚡️ Uploaded ⚡️", callback_data=f"uploaded#{from_user}")
+        ],[
+            InlineKeyboardButton("✅ Already Available ✅", callback_data=f"already_available#{from_user}")
+        ]]
         btn = [[
-                InlineKeyboardButton("Uɴᴀᴠᴀɪʟᴀʙʟᴇ", callback_data=f"unavailable#{from_user}"),
-                InlineKeyboardButton("Uᴘʟᴏᴀᴅᴇᴅ", callback_data=f"uploaded#{from_user}")
-             ],[
-                InlineKeyboardButton("Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ", callback_data=f"already_available#{from_user}")
-              ]]
-        btn2 = [[
-                 InlineKeyboardButton("Vɪᴇᴡ Sᴛᴀᴛᴜs", url=f"{query.message.link}")
-               ]]
-        if query.from_user.id in ADMINS:
+            InlineKeyboardButton("View Status", url=f"{query.message.link}")
+        ]]
+
+        st = await client.get_chat_member(cnl_id, userid)
+        if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
-            reply_markup = InlineKeyboardMarkup(btn)
+            reply_markup = InlineKeyboardMarkup(buttons)
             await query.message.edit_reply_markup(reply_markup)
-            await query.answer("Hᴇʀᴇ ᴀʀᴇ ᴛʜᴇ ᴏᴘᴛɪᴏɴs !")
         else:
             await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
     elif query.data.startswith("unavailable"):
         ident, from_user = query.data.split("#")
-        btn = [[
+        buttons = [[
                 InlineKeyboardButton("⚠️ Uɴᴀᴠᴀɪʟᴀʙʟᴇ ⚠️", callback_data=f"unalert#{from_user}")
               ]]
         btn2 = [[
