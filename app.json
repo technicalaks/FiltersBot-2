@@ -49,12 +49,20 @@
             "description": "Bot Logs. Give a channel id with -100xxxxxxx",
             "required": true
         },
+        "REQUEST_CHANNEL": {
+            "description": "Bot requests. Give a channel id with -100xxxxxxx",
+            "required": true
+        },
         "AUTH_USERS": {
             "description": "Username or ID of users to give access of inline search. Separate multiple users by space. Leave it empty if you don't want to restrict bot usage.",
             "required": false
         },
         "AUTH_CHANNEL": {
             "description": "ID of channel. Make sure bot is admin in this channel. Without subscribing this channel users cannot use bot.",
+            "required": false
+        },
+        "SUPPORT_GROUP": {
+            "description": "Bot support group. Give a channel id with -100xxxxxxx",
             "required": false
         },
         "DATABASE_URI": {
