@@ -39,7 +39,6 @@ Group ID: <code>{}</code>
 Name: {}
 Message: {}"""
 
-    PM_MSG_TXT = """#InboxMessage
-Name: {}
+    REQUEST_TXT = """Name: {}
 ID: <code>{}</code>
 Message: {}"""
