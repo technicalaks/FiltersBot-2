@@ -8,7 +8,7 @@ from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, SUPPORT_GROUP, REQUEST_CHANNEL, LOG_CHANNEL, STICKERS, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, SUPPORT_GROUP, SUPPORT_CHAT, REQUEST_CHANNEL, LOG_CHANNEL, STICKERS, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT
 from utils import get_settings, get_size, is_subscribed, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
@@ -460,14 +460,26 @@ async def settings(client, message):
 @Client.on_message(filters.regex("#request"))
 async def send_request(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
-        request = message.text
-        btn = [[
-            InlineKeyboardButton('View Request', url=f"{message.link}"),
-            InlineKeyboardButton('Show Options', callback_data=f'show_option')
-        ]]
-        sent_request = await bot.send_message(LOG_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(btn))
-        btns = [[
-            InlineKeyboardButton('View Request', url=f"{sent_request.link}")
-        ]]
-        await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btns))
-        
+        if message.chat.id == SUPPORT_GROUP:
+            try:
+                request = message.text.split(" ", 1)[1] # Extracting message from hashtag
+            except:
+                await message.reply_text("Use correct format.\n<code>#request your_request</code>")
+                return
+
+            buttons = [[
+                InlineKeyboardButton('View Request', url=f"{message.link}"),
+                InlineKeyboardButton('Show Options', callback_data=f'show_option')
+            ]]
+            sent_request = await bot.send_message(LOG_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
+            
+            btn = [[
+                InlineKeyboardButton('View Request', url=f"{sent_request.link}")
+            ]]
+            await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btn))
+
+        else:
+            btns = [[
+                InlineKeyboardButton('Support Chat', url=SUPPORT_CHAT)
+            ]]
+            await message.reply_text("This chat not allow your request! Please join 'Support Chat' group and request.", reply_markup=InlineKeyboardMarkup(btns))
