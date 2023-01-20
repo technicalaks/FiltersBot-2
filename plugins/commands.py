@@ -468,7 +468,7 @@ async def requests(bot, message):
 
     btn = [[
         
-        InlineKeyboardButton('View Request', url=f"{message.reply_to_message.link}"),
+        InlineKeyboardButton('View Request', url=f"{message.link}"),
         InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
     ]]
     
