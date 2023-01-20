@@ -745,7 +745,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_reply_markup(reply_markup)
 
     elif query.data.startswith("show_option"):
-        ident, cnl_id, from_user = query.data.split("#")
+        ident, from_user = query.data.split("#")
+        cnl_id = query.message.chat.id
+        userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable#{from_user}")
         ],[
