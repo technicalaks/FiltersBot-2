@@ -461,8 +461,9 @@ async def settings(client, message):
 async def requests(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         try:
-            user_id = str(message.from_user.id)
             message = message.text.split(" ", 1)[1]
+        except:
+            await message.reply_text("use correct format")
 
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{message.link}"),
@@ -473,5 +474,4 @@ async def requests(bot, message):
                 InlineKeyboardButton('View Request', url=f"{request.link}")
             ]]
             await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btns))
-        except:
-            await message.reply_text("use correct format")
+        
