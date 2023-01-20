@@ -62,13 +62,6 @@ async def give_filter(client, message):
                 await auto_filter(client, message)
 
 
-@Client.on_message(filters.private & filters.text & filters.incoming)
-async def pm_msg(bot, message):
-    if message.text.startswith("/"): return  # ignore commands
-    await message.reply_text("Your message has been sent in my owner!")
-    await bot.send_message(LOG_CHANNEL, script.PM_MSG_TXT.format(message.from_user.mention, message.from_user.id, message.text))
-
-
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
