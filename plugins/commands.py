@@ -464,6 +464,7 @@ async def requests(bot, message):
             message = message.text.split(" ", 1)[1]
         except:
             await message.reply_text("use correct format")
+            return
 
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{message.link}"),
