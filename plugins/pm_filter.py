@@ -746,7 +746,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("show_option"):
         ident, from_user = query.data.split("#")
-        cnl_id = query.message.chat.id
+        channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable#{from_user}")
@@ -755,7 +755,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ],[
             InlineKeyboardButton("✅ Already Available ✅", callback_data=f"already_available#{from_user}")
         ]]
-        st = await client.get_chat_member(cnl_id, userid)
+        st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
         else:
@@ -763,7 +763,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("unavailable"):
         ident, from_user = query.data.split("#")
-        cnl_id = query.message.chat.id
+        channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("⚠️ Unavailable ⚠️", callback_data=f"unavailable_alert#{from_user}")
@@ -771,19 +771,71 @@ async def cb_handler(client: Client, query: CallbackQuery):
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(cnl_id, userid)
+        st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
-            request = query.message.text
-            await query.message.edit_text(f"<strike>{request}</strike>")
+            message = query.message.text
+            await query.message.edit_text(f"<strike>{message}</strike>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
-                await client.send_message(from_user, text=f"<b>Hᴇʏ {user.mention}, Sᴏʀʀʏ Yᴏᴜʀ ʀᴇᴏ̨ᴜᴇsᴛ ɪs ᴜɴᴀᴠᴀɪʟᴀʙʟᴇ. Sᴏ ᴏᴜʀ ᴍᴏᴅᴇʀᴀᴛᴏʀs ᴄᴀɴ'ᴛ ᴜᴘʟᴏᴀᴅ ɪᴛ.</b>", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(from_user, text="Sorry your request unavailable!", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"<b>Hᴇʏ {user.mention}, Sᴏʀʀʏ Yᴏᴜʀ ʀᴇᴏ̨ᴜᴇsᴛ ɪs ᴜɴᴀᴠᴀɪʟᴀʙʟᴇ. Sᴏ ᴏᴜʀ ᴍᴏᴅᴇʀᴀᴛᴏʀs ᴄᴀɴ'ᴛ ᴜᴘʟᴏᴀᴅ ɪᴛ.\n\nNᴏᴛᴇ: Tʜɪs ᴍᴇssᴀɢᴇ ɪs sᴇɴᴛ ᴛᴏ ᴛʜɪs ɢʀᴏᴜᴘ ʙᴇᴄᴀᴜsᴇ ʏᴏᴜ'ᴠᴇ ʙʟᴏᴄᴋᴇᴅ ᴛʜᴇ ʙᴏᴛ. Tᴏ sᴇɴᴅ ᴛʜɪs ᴍᴇssᴀɢᴇ ᴛᴏ ʏᴏᴜʀ PM, Mᴜsᴛ ᴜɴʙʟᴏᴄᴋ ᴛʜᴇ ʙᴏᴛ.</b>", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request unavailable!", reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
+    elif query.data.startswith("uploaded"):
+        ident, from_user = query.data.split("#")
+        channel_id = query.message.chat.id
+        userid = query.from_user.id
+        buttons = [[
+            InlineKeyboardButton("⚡️ Uploaded ⚡️", callback_data=f"uploaded_alert#{from_user}")
+        ]]
+        btn = [[
+            InlineKeyboardButton("View Status", url=f"{query.message.link}")
+        ]]
+        st = await client.get_chat_member(channel_id, userid)
+        if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
+            user = await client.get_users(from_user)
+            message = query.message.text
+            await query.message.edit_text(f"<strike>{message}</strike>")
+            await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
+            try:
+                await client.send_message(from_user, text="Your request is uploaded!", reply_markup=InlineKeyboardMarkup(btn2))
+            except UserIsBlocked:
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded!", reply_markup=InlineKeyboardMarkup(btn2))
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("already_available"):
+        ident, from_user = query.data.split("#")
+        channel_id = query.message.chat.id
+        userid = query.from_user.id
+        buttons = [[
+            InlineKeyboardButton("✅ Already Available ✅", callback_data=f"already_available_alert#{from_user}")
+        ]]
+        btn = [[
+            InlineKeyboardButton("View Status", url=f"{query.message.link}")
+        ]]
+        st = await client.get_chat_member(channel_id, userid)
+        if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
+            user = await client.get_users(from_user)
+            message = query.message.text
+            await query.message.edit_text(f"<strike>{message}</strike>")
+            await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
+            try:
+                await client.send_message(from_user, text="Your request is already available!", reply_markup=InlineKeyboardMarkup(btn))
+            except UserIsBlocked:
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is already available!", reply_markup=InlineKeyboardMarkup(btn))
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("unavailable_alert"):
+        ident, from_user = query.data.split("#")
+        if query.from_user.id == from_user:
+            await query.answer(f"Hᴇʏ {user.first_name}, Yᴏᴜʀ Rᴇᴏ̨ᴜᴇsᴛ ɪs Aʟʀᴇᴀᴅʏ Aᴠᴀɪʟᴀʙʟᴇ !", show_alert=True)
+        else:
+            await query.answer("Yᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ sᴜғғɪᴄɪᴀɴᴛ ʀɪɢᴛs ᴛᴏ ᴅᴏ ᴛʜɪs !", show_alert=True)
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
         message = msg
