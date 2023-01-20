@@ -129,14 +129,14 @@ async def next_page(bot, query):
                                   callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")]
         )
     elif off_set is None:
         btn.append(
             [InlineKeyboardButton(f"🗓 PAGES {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
              InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")])
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")])
+            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")])
     else:
         btn.append(
             [
@@ -147,7 +147,7 @@ async def next_page(bot, query):
         )
         btn.append(
             [
-                InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")
+                InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")
             ]
         )
     try:
@@ -913,14 +913,14 @@ async def auto_filter(client, msg, spoll=False):
              InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="next#closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")]
         )
     else:
         btn.append(
             [InlineKeyboardButton(text="🗓 PAGES 1 / 1", callback_data="page")]
         )
         btn.append(
-            [InlineKeyboardButton("❌ Close ❌", callback_data="closeresults")]
+            [InlineKeyboardButton("❌ Close ❌", callback_data="next_closeresults")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     if imdb:
