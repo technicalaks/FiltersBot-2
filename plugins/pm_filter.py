@@ -518,8 +518,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_reply_markup(
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
+            reply_markup=reply_markup
         )
     elif query.data == "bot_status":
         await query.answer("Refreshing Database...")
