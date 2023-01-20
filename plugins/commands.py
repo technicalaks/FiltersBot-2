@@ -459,7 +459,7 @@ async def settings(client, message):
              
 @Client.on_message((filters.command(["request", "Request"]) | filters.regex("#request") | filters.regex("#Request")) & filters.group)
 async def requests(bot, message):
-    if:
+    if message.chat.id:
         chat_id = message.chat.id
         reporter = str(message.from_user.id)
         mention = message.from_user.mention
