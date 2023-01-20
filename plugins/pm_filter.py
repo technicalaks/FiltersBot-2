@@ -826,7 +826,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 await client.send_message(from_user, text="Your request is already available!", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {from_user},\n\nYour request is already available!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is already available!", reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
