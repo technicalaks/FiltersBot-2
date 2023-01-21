@@ -833,7 +833,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("na_alert"):
         ident, from_user = query.data.split("#")
-        if query.from_user.id = from_user:
+        if query.from_user.id == from_user:
             await query.answer("Sorry your request is not available!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
