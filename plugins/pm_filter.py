@@ -765,7 +765,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data.startswith("not_available"):
         ident, from_user = query.data.split("#")
         channel_id = query.message.chat.id
-        userid = query.from_user.id if query.from_user else None
+        userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("❌ Not Available ❌", callback_data=f"na_alert#{from_user}")
         ]]
