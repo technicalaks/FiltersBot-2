@@ -833,21 +833,24 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("na_alert"):
         ident, from_user = query.data.split("#")
-        if int(from_user) != 0 and query.from_user.id != int(from_user):
+        userid = query.from_user.id
+        if userid in from_user:
             await query.answer("Sorry your request is not available!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("ul_alert"):
         ident, from_user = query.data.split("#")
-        if str(query.from_user.id) in from_user:
+        userid = query.from_user.id
+        if str(userid) in from_user:
             await query.answer("Your request is uploaded!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("aa_alert"):
         ident, from_user = query.data.split("#")
-        if str(query.from_user.id) in from_user:
+        userid = query.from_user.id
+        if str(userid) in from_user:
             await query.answer("Your request is already available!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
