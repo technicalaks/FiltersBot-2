@@ -776,7 +776,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             message = query.message.text
-            await query.message.edit_text(f"<strike>{message}</strike>")
+            await query.message.edit_text(f"<s>{message}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Sorry your request is unavailable!", reply_markup=InlineKeyboardMarkup(btn))
@@ -799,7 +799,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             message = query.message.text
-            await query.message.edit_text(f"<strike>{message}</strike>")
+            await query.message.edit_text(f"<s>{message}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Your request is uploaded!", reply_markup=InlineKeyboardMarkup(btn))
@@ -822,7 +822,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             message = query.message.text
-            await query.message.edit_text(f"<strike>{message}</strike>")
+            await query.message.edit_text(f"<s>{message}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Your request is already available!", reply_markup=InlineKeyboardMarkup(btn))
@@ -833,7 +833,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("na_alert"):
         ident, from_user = query.data.split("#")
-        if str(query.from_user.id) in from_user:
+        if query.from_user.id = from_user:
             await query.answer("Sorry your request is not available!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
