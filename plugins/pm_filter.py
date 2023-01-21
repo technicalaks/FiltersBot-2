@@ -765,14 +765,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data.startswith("not_available"):
         ident, from_user = query.data.split("#")
         channel_id = query.message.chat.id
-        userid = query.from_user.id
+        userid = str(query.from_user.id)
         buttons = [[
             InlineKeyboardButton("❌ Not Available ❌", callback_data=f"na_alert#{from_user}")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(str(channel_id), str(userid))
+        st = await client.get_chat_member(channel_id), userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
