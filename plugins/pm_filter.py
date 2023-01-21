@@ -772,7 +772,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(channel_id), userid)
+        st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
