@@ -775,8 +775,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
-            message = query.message.text
-            await query.message.edit_text(f"<s>{message}</s>")
+            request = query.message.text
+            await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Sorry your request is unavailable!", reply_markup=InlineKeyboardMarkup(btn))
@@ -798,8 +798,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
-            message = query.message.text
-            await query.message.edit_text(f"<s>{message}</s>")
+            request = query.message.text
+            await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Your request is uploaded!", reply_markup=InlineKeyboardMarkup(btn))
@@ -821,8 +821,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
-            message = query.message.text
-            await query.message.edit_text(f"<s>{message}</s>")
+            request = query.message.text
+            await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Your request is already available!", reply_markup=InlineKeyboardMarkup(btn))
