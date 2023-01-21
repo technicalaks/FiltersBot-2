@@ -750,6 +750,45 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
+            InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept#{from_user}")
+        ],[
+            InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject#{from_user}")
+        ]]
+        st = await client.get_chat_member(channel_id, userid)
+        if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
+            await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("reject"):
+        ident, from_user = query.data.split("#")
+        channel_id = query.message.chat.id
+        userid = query.from_user.id
+        buttons = [[
+            InlineKeyboardButton("❌ Reject ❌", callback_data=f"rj_alert#{from_user}")
+        ]]
+        btn = [[
+            InlineKeyboardButton("View Status", url=f"{query.message.link}")
+        ]]
+        st = await client.get_chat_member(channel_id, userid)
+        if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
+            user = await client.get_users(from_user)
+            request = query.message.text
+            await query.answer("Message sent requester")
+            await query.message.edit_text(f"<s>{request}</s>")
+            await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
+            try:
+                await client.send_message(from_user, text="Sorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn))
+            except UserIsBlocked:
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn))
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("accept"):
+        ident, from_user = query.data.split("#")
+        channel_id = query.message.chat.id
+        userid = query.from_user.id
+        buttons = [[
             InlineKeyboardButton("❌ Not Available ❌", callback_data=f"not_available#{from_user}")
         ],[
             InlineKeyboardButton("⚡️ Uploaded ⚡️", callback_data=f"uploaded#{from_user}")
@@ -776,12 +815,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
+            await query.answer("Message sent requester")
             await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
-                await client.send_message(from_user, text="Sorry your request is unavailable!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(from_user, text="Sorry your request is not available! ❌", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request is unavailable!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request is not available! ❌", reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
@@ -799,12 +839,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
+            await query.answer("Message sent requester")
             await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
-                await client.send_message(from_user, text="Your request is uploaded!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(from_user, text="Your request is uploaded! ⚡️", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded! ⚡️", reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
@@ -822,12 +863,21 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
+            await query.answer("Message sent requester")
             await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
-                await client.send_message(from_user, text="Your request is already available!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(from_user, text="Your request is already available! ✅", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is already available!", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is already available! ✅", reply_markup=InlineKeyboardMarkup(btn))
+        else:
+            await query.answer("This Is Not For You!", show_alert=True)
+
+    elif query.data.startswith("rj_alert"):
+        ident, from_user = query.data.split("#")
+        userid = query.from_user.id
+        if str(userid) in from_user:
+            await query.answer("Sorry your request is not reject!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
