@@ -877,7 +877,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ident, from_user = query.data.split("#")
         userid = query.from_user.id
         if str(userid) in from_user:
-            await query.answer("Sorry your request is not reject!", show_alert=True)
+            await query.answer("Sorry your request is reject!", show_alert=True)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
