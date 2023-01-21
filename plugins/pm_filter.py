@@ -764,7 +764,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("not_available"):
         ident, from_user = query.data.split("#")
-        channel_id = query.message.chat.id
+        channel_id = query.from_user.id if query.from_user else None
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("❌ Not Available ❌", callback_data=f"na_alert#{from_user}")
@@ -773,7 +773,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
         st = await client.get_chat_member(channel_id, userid)
-        if str(st.status == enums.ChatMemberStatus.ADMINISTRATOR) or str(st.status == enums.ChatMemberStatus.OWNER):
+        if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
             await query.message.edit_text(f"<s>{request}</s>")
