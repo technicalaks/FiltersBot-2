@@ -473,7 +473,7 @@ async def send_request(bot, message):
                                                       [[
                                                           InlineKeyboardButton('View Request', url=f"{message.link}")
                                                       ],[
-                                                          InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{user_id}#{sent_request.id}')
+                                                          InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{sent_request.id}#{user_id}')
                                                       ]]
                                                   )
                                                  )
