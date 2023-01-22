@@ -455,7 +455,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
         await client.send_message(chat_id=query.from_user.id, text=f"👋 Hello {query.from_user.mention},\n\nHappy Downloading and Come Again... ❤️")
 
-    elif query.data.startswith("grp_checksub"):
+    elif query.data == "grp_checksub":
         user = query.message.reply_to_message.from_user.id
         if int(user) != 0 and query.from_user.id != int(user):
             return await query.answer(f"Hello {query.from_user.first_name},\nThis Is Not For You!", show_alert=True)
