@@ -846,7 +846,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 await client.send_message(from_user, text="Your request is uploaded! ⚡️", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded! ⚡️", reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded! ⚡️", reply_markup=InlineKeyboardMarkup(btn), reply_to_message_id=from_user)
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
