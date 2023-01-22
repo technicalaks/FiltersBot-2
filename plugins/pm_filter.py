@@ -840,7 +840,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
-            mess_id = query.data.split()[1]
+            mess_id = query.data.split('#')[1]
             await query.answer("Message sent requester")
             await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
