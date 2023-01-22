@@ -468,13 +468,13 @@ async def send_request(bot, message):
                 await message.reply_text("Your request is incomplete.")
                 return
 
-            buttons = [[
+            sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(
+            [[
                 InlineKeyboardButton('View Request', url=f"{message.link}")
             ],[
                 InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{user_id}_{sent_request.id}')
-            ]]
-            sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
-            
+                ))
+
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{sent_request.link}")
             ]]
