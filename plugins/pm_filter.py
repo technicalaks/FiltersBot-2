@@ -781,7 +781,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 await client.send_message(chat_id=from_user, text="Sorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn), reply_to_message_id=from_user.reply_to_message.id)
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nSorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn), reply_to_message_id=str(reply_to_message.from_user))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
