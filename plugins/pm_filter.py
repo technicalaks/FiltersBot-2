@@ -840,13 +840,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(from_user)
             request = query.message.text
+            mess_id = query.data.split()[1]
             await query.answer("Message sent requester")
             await query.message.edit_text(f"<s>{request}</s>")
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
             try:
                 await client.send_message(from_user, text="Your request is uploaded! ⚡️", reply_markup=InlineKeyboardMarkup(btn))
             except UserIsBlocked:
-                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded! ⚡️", reply_to_message_id=int(user.id), reply_markup=InlineKeyboardMarkup(btn))
+                await client.send_message(SUPPORT_GROUP, text=f"👋 Hello {user.mention},\n\nYour request is uploaded! ⚡️", reply_to_message_id=mess_id, reply_markup=InlineKeyboardMarkup(btn))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
