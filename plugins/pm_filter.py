@@ -748,11 +748,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("show_options"):
         ident, from_user = query.data.split("#")
-        #ident, msg_id = query.data.split("#")[2]
+        ident, msg_id = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept#{from_user}")
+            InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept#{from_user}#{msg_id}")
         ],[
             InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject#{from_user}")
         ]]
@@ -763,8 +763,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("reject"):
-        ident, from_user = query.data.split("#")[1]
-        ident, msg_id = query.data.split("#")[2]
+        ident, from_user = query.data.split("#")
+        ident, msg_id = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
