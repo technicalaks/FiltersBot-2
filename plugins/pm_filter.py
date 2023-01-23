@@ -762,8 +762,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("reject"):
-        ident, from_user = query.data.split("#")[1]
-        msg_id = query.data.split("#")[2]
+        ident, from_user = query.data.split("#")[2]
+        msg_id = query.data.split("#")[1]
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
