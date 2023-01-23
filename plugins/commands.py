@@ -464,7 +464,7 @@ async def send_request(bot, message):
             try:
                 request = message.text.split(" ", 1)[1]
             except:
-                await message.reply_text("Your request is incomplete!")
+                await message.reply_text("Your request is incomplete.")
                 return
 
             buttons = [[
