@@ -768,14 +768,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("❌ Reject ❌", callback_data=f"rj_alert_{from_user}")
+            InlineKeyboardButton("❌ Reject ❌", callback_data=f"rj_alert")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
         st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
-            user = await client.get_users(from_user)
+            #user = await client.get_users(from_user)
             request = query.message.text
             await query.answer("Message sent requester")
             await query.message.edit_text(f"<s>{request}</s>")
