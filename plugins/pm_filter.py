@@ -747,8 +747,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_reply_markup(reply_markup)
 
     elif query.data.startswith("show_options"):
-        ident, from_user = query.data.split('#')[1]
-        ident, msg_id = query.data.split('#')[2]
+        ident, from_user, msg_id = query.data.split('#')
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
@@ -763,8 +762,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("reject"):
-        ident, from_user = query.data.split("#")[1]
-        ident, msg_id = query.data.split("#")[2]
+        ident, from_user, msg_id = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
@@ -784,7 +782,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 #await client.send_message(chat_id=from_user, text="Sorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn))
             #except UserIsBlocked:
 
-            await client.send_message(SUPPORT_GROUP, text=f"👋 Hello,\n\nSorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn), reply_to_message_id=str(msg_id))
+            await client.send_message(SUPPORT_GROUP, text=f"👋 Hello,\n\nSorry your request is reject! ❌", reply_markup=InlineKeyboardMarkup(btn), reply_to_message_id=int(msg_id))
         else:
             await query.answer("This Is Not For You!", show_alert=True)
 
