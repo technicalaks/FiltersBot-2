@@ -375,6 +375,26 @@ async def settings(client, message):
         buttons = [
             [
                 InlineKeyboardButton(
+                    'Auto Filter',
+                    callback_data=f'setgs#autofilter#{settings["autofilter"]}#{grp_id}'
+                ),
+                InlineKeyboardButton(
+                    '✅ Yes' if settings["autofilter"] else '❌ No',
+                    callback_data=f'setgs#autofilter#{settings["autofilter"]}#{grp_id}'
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    'Auto Delete',
+                    callback_data=f'setgs#auto_delete#{settings["auto_delete"]}#{grp_id}'
+                ),
+                InlineKeyboardButton(
+                    'One Hour' if settings["auto_delete"] else '❌ No',
+                    callback_data=f'setgs#auto_delete#{settings["auto_delete"]}#{grp_id}'
+                )
+            ],
+            [
+                InlineKeyboardButton(
                     'Filter Button',
                     callback_data=f'setgs#button#{settings["button"]}#{grp_id}'
                 ),
