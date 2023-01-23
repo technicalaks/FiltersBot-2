@@ -748,6 +748,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("show_options"):
         ident, from_user = query.data.split("#")[1]
+        msg_id = query.data.split("#")[2]
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
