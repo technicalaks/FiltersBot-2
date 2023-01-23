@@ -1,7 +1,8 @@
 from pyrogram import Client, filters
 from info import LOG_CHANNEL, ADMINS
 
-
+BOT_STATUS = "0"
+status = set(int(x) for x in (BOT_STATUS).split())
 
 @Client.on_message(filters.command("forward"))
 async def forward(bot, message):
