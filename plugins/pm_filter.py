@@ -747,14 +747,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_reply_markup(reply_markup)
 
     elif query.data.startswith("show_options"):
-        ident, from_user = query.data.split('_', 1)
-        ident, msg_id = query.data.split('_')
+        #ident, from_user = query.data.split("#")
+        ident, msg_id = query.data.split('#')
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept {from_user}")
         ],[
-            InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject {from_user} {msg_id}")
+            InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject#{msg_id}")
         ]]
         st = await client.get_chat_member(channel_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
@@ -763,8 +763,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("reject"):
-        ident, from_user = query.data.split("_")
-        ident, msg_id = query.data.split("_")
+        #ident, from_user = query.data.split("#")
+        ident, msg_id = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
