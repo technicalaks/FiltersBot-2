@@ -747,13 +747,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_reply_markup(reply_markup)
 
     elif query.data.startswith("show_options"):
-        #ident, from_user = query.data.split("#")
+        ident, from_user = query.data.split("#")
         ident, msg_id = query.data.split('#')
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            #InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept {from_user}")
-        #],[
+            InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept#{from_user}")
+        ],[
             InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject#{msg_id}")
         ]]
         st = await client.get_chat_member(channel_id, userid)
@@ -763,12 +763,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("This Is Not For You!", show_alert=True)
 
     elif query.data.startswith("reject"):
-        #ident, from_user = query.data.split("#")
+        ident, from_user = query.data.split("#")
         ident, msg_id = query.data.split("#")
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("❌ Reject ❌", callback_data=f"rj_alert")
+            InlineKeyboardButton("❌ Reject ❌", callback_data=f"rj_alert#{from_user}")
         ]]
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
