@@ -7,7 +7,7 @@ from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidD
 from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, make_inactive
-from info import ADMINS, AUTH_CHANNEL, LOG_CHANNEL, SUPPORT_CHAT, SUPPORT_GROUP, PICS, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
+from info import ADMINS, AUTH_CHANNEL, LOG_CHANNEL, SUPPORT_CHAT, SUPPORT_GROUP, PICS, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, PROTECT_CONTENT, IMDB, SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, AUTOFILTER, AUTO_DELETE
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid, ChatAdminRequired
@@ -30,10 +30,11 @@ SPELL_CHECK = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
+    settings = await get_settings(message.chat.id)
     if message.chat.id == SUPPORT_GROUP:
         k = await manual_filters(client, message)
         if k == False:
-            await auto_filter(client, message)
+            await auto_filter(client, message) if settings["autofilter"] else None
     else:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
             try:
@@ -59,7 +60,7 @@ async def give_filter(client, message):
         else:
             k = await manual_filters(client, message)
             if k == False:
-                await auto_filter(client, message)
+                await auto_filter(client, message) if settings["autofilter"] else None
 
 
 @Client.on_callback_query(filters.regex(r"^next"))
@@ -1010,21 +1011,34 @@ async def auto_filter(client, msg, spoll=False):
         cap = f"✅ I Found: <code>{search}</code>\n\n🗣 Requested by: {message.from_user.mention}\n©️ Powered by: <b>{message.chat.title}</b>"
     if imdb and imdb.get('poster'):
         try:
-            await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
+            k = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                           reply_markup=InlineKeyboardMarkup(btn))
+            await asyncio.sleep(3600)
+            await message.delete()
+            await k.delete()
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
-            await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            k = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            await asyncio.sleep(3600)
+            await message.delete()
+            await k.delete()
         except Exception as e:
             logger.exception(e)
-            await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
+            k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
+            await asyncio.sleep(3600)
+            await message.delete()
+            await k.delete()
     else:
         if message.chat.id == SUPPORT_GROUP:
             buttons = [[InlineKeyboardButton('✨ Our Group ✨', url='https://t.me/SL_Films_World')]]
-            await message.reply_text(text=f"👋 Hello {message.from_user.mention},\n\n✅ I Found: {search}\n💯 Total Results: <code>{total_results}</code>\n\nAvailable In 👇", reply_markup=InlineKeyboardMarkup(buttons))
+            k = await message.reply_text(text=f"👋 Hello {message.from_user.mention},\n\n✅ I Found: {search}\n💯 Total Results: <code>{total_results}</code>\n\nAvailable In 👇", reply_markup=InlineKeyboardMarkup(buttons))
+            
         else:
-            await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
+            k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
+            await asyncio.sleep(3600)
+            await message.delete()
+            await k.delete()
     if spoll:
         await msg.message.delete()
 
