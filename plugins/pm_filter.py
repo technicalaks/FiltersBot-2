@@ -752,8 +752,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         channel_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
-            InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept {from_user}")
-        ],[
+            #InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept {from_user}")
+        #],[
             InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject#{msg_id}")
         ]]
         st = await client.get_chat_member(channel_id, userid)
