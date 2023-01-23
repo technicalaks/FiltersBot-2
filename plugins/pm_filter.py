@@ -1,4 +1,4 @@
-import rando
+import random
 import asyncio
 import re
 import ast
