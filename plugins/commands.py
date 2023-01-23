@@ -463,31 +463,28 @@ async def send_request(bot, message):
         if message.chat.id == SUPPORT_GROUP:
             user_id = message.from_user.id
             try:
-                request = message.text.split(" ", 1)[1] # extracting message from hashtag
+                request = message.text.split(" ", 1)[1]
             except:
                 await message.reply_text("Your request is incomplete.")
                 return
 
-            sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request),
-                                                  reply_markup=InlineKeyboardMarkup(
-                                                      [[
-                                                          InlineKeyboardButton('View Request', url=f"{message.link}")
-                                                      ],[
-                                                          InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{sent_request.id}#{user_id}')
-                                                      ]]
-                                                  )
-                                                 )
-
+            buttons = [[
+                InlineKeyboardButton('View Request', url=f"{message.link}")
+            ],[
+                InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{user_id}_{message.id}')
+            ]]
+            sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
+            
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{sent_request.link}")
             ]]
             await message.reply_text("Your request has been added! Please wait for some time.", reply_markup=InlineKeyboardMarkup(btn))
 
         else:
-            btns = [[
+            btn = [[
                 InlineKeyboardButton('Support Chat', url=SUPPORT_CHAT)
             ]]
-            await message.reply_text("This chat not allow your request! Please join 'Support Chat' group and request.", reply_markup=InlineKeyboardMarkup(btns))
+            await message.reply_text("This chat not allow your request! Please join 'Support Chat' group and request.", reply_markup=InlineKeyboardMarkup(btn))
     else:
         btn = [[
             InlineKeyboardButton('Support Chat', url=SUPPORT_CHAT)
