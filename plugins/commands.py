@@ -461,17 +461,16 @@ async def settings(client, message):
 async def send_request(bot, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         if message.chat.id == SUPPORT_GROUP:
-            user_id = message.from_user.id
             try:
                 request = message.text.split(" ", 1)[1]
             except:
-                await message.reply_text("Your request is incomplete.")
+                await message.reply_text("Your request is incomplete!")
                 return
 
             buttons = [[
                 InlineKeyboardButton('View Request', url=f"{message.link}")
             ],[
-                InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{user_id}#{message.id}')
+                InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{message.from_user.id}#{message.id}')
             ]]
             sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
             
