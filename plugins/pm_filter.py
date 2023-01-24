@@ -420,6 +420,15 @@ async def cb_handler(client: Client, query: CallbackQuery):
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
+            elif settings['send_file_channel']:
+                sent_file = await client.send_cached_media(
+                    chat_id=LOG_CHANNEL,
+                    file_id=file_id,
+                    caption=f_caption,
+                    protect_content=True if ident == "filep" else False,
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('❤️‍🔥 Please Share and Support ❤️‍🔥', url=f'https://t.me/share/url?url=https://t.me/{temp.U_NAME}')]])
+                )
+                return
             else:
                 await client.send_cached_media(
                     chat_id=query.from_user.id,
