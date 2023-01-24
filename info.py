@@ -28,13 +28,13 @@ ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '').split()]
 auth_channel = environ.get('AUTH_CHANNEL', '')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
+requests_channel = environ.get('REQUESTS_CHANNEL', '')
+REQUESTS_CHANNEL = int(requests_channel) if requests_channel and id_pattern.search(requests_channel) else None
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', ''))
 INDEX_REQ_CHANNEL = int(environ.get('INDEX_REQ_CHANNEL', LOG_CHANNEL))
 FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).split()]
 
 # Groups
-support_group = environ.get('SUPPORT_GROUP', '')
-SUPPORT_GROUP = int(support_group) if support_group and id_pattern.search(support_group) else None
 requests_group = environ.get('REQUESTS_GROUP', '')
 REQUESTS_GROUP = int(requests_group) if requests_group and id_pattern.search(requests_group) else None
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'https://t.me/SL_Filters_Bot_Support')
