@@ -1,5 +1,5 @@
 import motor.motor_asyncio
-from info import DATABASE_NAME, DATABASE_URI, IMDB, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_FILTER, SEND_FILE_CHANNEL
+from info import DATABASE_NAME, DATABASE_URI, IMDB, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_FILTER
 
 class Database:
     
@@ -109,7 +109,6 @@ class Database:
         default = {
             'autofilter': AUTO_FILTER,
             'button': SINGLE_BUTTON,
-            'send_file_channel': SEND_FILE_CHANNEL,
             'botpm': P_TTI_SHOW_OFF,
             'file_secure': PROTECT_CONTENT,
             'imdb': IMDB,
