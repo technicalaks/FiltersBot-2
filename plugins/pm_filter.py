@@ -7,7 +7,7 @@ from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidD
 from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, make_inactive
-from info import ADMINS, AUTH_CHANNEL, LOG_CHANNEL, SUPPORT_CHAT, SUPPORT_GROUP, PICS, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, PROTECT_CONTENT, IMDB, SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, AUTOFILTER, AUTO_DELETE
+from info import ADMINS, AUTH_CHANNEL, LOG_CHANNEL, SUPPORT_CHAT, SUPPORT_GROUP, PICS, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, BOT_PM, PROTECT_CONTENT, IMDB, SINGLE_BUTTON, SPELL_CHECK, IMDB_TEMPLATE, AUTO_FILTER, SEND_FILE_CHANNEL
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid, ChatAdminRequired
@@ -589,6 +589,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
                     InlineKeyboardButton('Single' if settings["button"] else 'Double',
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('Send File Channel', callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ Yes' if settings["send_file_channel"] else '❌ No',
+                                         callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('Bot Inbox', callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}'),
