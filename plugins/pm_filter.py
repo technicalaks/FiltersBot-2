@@ -1025,39 +1025,24 @@ async def auto_filter(client, msg, spoll=False):
         try:
             k = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                           reply_markup=InlineKeyboardMarkup(btn))
-            await asyncio.sleep(10)
-            await message.delete()
-            await k.delete()
-            return
+
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             k = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
-            await asyncio.sleep(10)
-            await message.delete()
-            await k.delete()
-            return
+
         except Exception as e:
             logger.exception(e)
             k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
-            await asyncio.sleep(10)
-            await message.delete()
-            await k.delete()
-            return
+
     else:
         if message.chat.id == SUPPORT_GROUP:
             buttons = [[InlineKeyboardButton('✨ Our Group ✨', url='https://t.me/SL_Films_World')]]
             k = await message.reply_text(text=f"👋 Hello {message.from_user.mention},\n\n✅ I Found: {search}\n💯 Total Results: <code>{total_results}</code>\n\nAvailable In 👇", reply_markup=InlineKeyboardMarkup(buttons))
-            await asyncio.sleep(10)
-            await message.delete()
-            await k.delete()
-            return
+
         else:
             k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
-            await asyncio.sleep(10)
-            await message.delete()
-            await k.delete()
-            return
+
     if spoll:
         await msg.message.delete()
 
