@@ -1,5 +1,5 @@
 import motor.motor_asyncio
-from info import DATABASE_NAME, DATABASE_URI, IMDB, WELCOME_MSG, BOT_PM, SINGLE_BUTTON, SPELL_CHECK, PROTECT_CONTENT, AUTO_FILTER, SEND_FILE_CHANNEL
+from info import DATABASE_NAME, DATABASE_URI, IMDB, MELCOW_NEW_USERS, P_TTI_SHOW_OFF, SINGLE_BUTTON, SPELL_CHECK_REPLY, PROTECT_CONTENT, AUTO_FILTER, SEND_FILE_CHANNEL
 
 class Database:
     
@@ -108,13 +108,13 @@ class Database:
     async def get_settings(self, id):
         default = {
             'autofilter': AUTO_FILTER,
-            'send_file_channel': SEND_FILE_CHANNEL,
             'button': SINGLE_BUTTON,
-            'botpm': BOT_PM,
+            'send_file_channel': SEND_FILE_CHANNEL,
+            'botpm': P_TTI_SHOW_OFF,
             'file_secure': PROTECT_CONTENT,
             'imdb': IMDB,
-            'spell_check': SPELL_CHECK,
-            'welcome': WELCOME_MSG
+            'spell_check': SPELL_CHECK_REPLY,
+            'welcome': MELCOW_NEW_USERS
         }
         chat = await self.grp.find_one({'id':int(id)})
         if chat:
