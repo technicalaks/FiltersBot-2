@@ -1028,6 +1028,7 @@ async def auto_filter(client, msg, spoll=False):
             await asyncio.sleep(10)
             await message.delete()
             await k.delete()
+            return
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
@@ -1035,12 +1036,14 @@ async def auto_filter(client, msg, spoll=False):
             await asyncio.sleep(10)
             await message.delete()
             await k.delete()
+            return
         except Exception as e:
             logger.exception(e)
             k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
             await asyncio.sleep(10)
             await message.delete()
             await k.delete()
+            return
     else:
         if message.chat.id == SUPPORT_GROUP:
             buttons = [[InlineKeyboardButton('✨ Our Group ✨', url='https://t.me/SL_Films_World')]]
@@ -1048,6 +1051,7 @@ async def auto_filter(client, msg, spoll=False):
             await asyncio.sleep(10)
             await message.delete()
             await k.delete()
+            return
         else:
             k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
             await asyncio.sleep(10)
