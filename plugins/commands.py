@@ -8,7 +8,7 @@ from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, SUPPORT_GROUP, REQUEST_CHANNEL, SUPPORT_CHAT, LOG_CHANNEL, STICKERS, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, SUPPORT_GROUP, REQUESTS_GROUP, SUPPORT_CHAT, LOG_CHANNEL, STICKERS, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT
 from utils import get_settings, get_size, is_subscribed, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
@@ -44,13 +44,8 @@ async def start(client, message):
         )
         return
     if AUTH_CHANNEL and not await is_subscribed(client, message):
-        try:
-            invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
-        except ChatAdminRequired:
-            logger.error("Make sure Bot is admin in Forcesub channel")
-            return
         btn = [[
-            InlineKeyboardButton("📢 Updates Channel 📢", url=invite_link.invite_link)
+            InlineKeyboardButton("📢 Updates Channel 📢", url='https://t.me/SL_Filters_Bot_Updates')
         ]]
 
         if message.command[1] != "subscribe":
@@ -481,7 +476,7 @@ async def send_request(bot, message):
             ],[
                 InlineKeyboardButton('🔰 Show Options 🔰', callback_data=f'show_options#{message.from_user.id}#{message.id}')
             ]]
-            sent_request = await bot.send_message(REQUEST_CHANNEL, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
+            sent_request = await bot.send_message(REQUESTS_GROUP, script.REQUEST_TXT.format(message.from_user.mention, message.from_user.id, request), reply_markup=InlineKeyboardMarkup(buttons))
             
             btn = [[
                 InlineKeyboardButton('View Request', url=f"{sent_request.link}")
