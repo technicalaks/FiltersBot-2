@@ -34,7 +34,10 @@ async def give_filter(client, message):
     if message.chat.id == SUPPORT_GROUP:
         k = await manual_filters(client, message)
         if k == False:
-            await auto_filter(client, message) if settings["autofilter"] else None
+            if settings["autofilter"]:
+                await auto_filter(client, message)
+            else:
+                await message.reply_text('off')
     else:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
             try:
