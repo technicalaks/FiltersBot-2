@@ -7,7 +7,7 @@ from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidD
 from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, make_inactive
-from info import ADMINS, AUTH_CHANNEL, LOG_CHANNEL, SUPPORT_CHAT, SUPPORT_GROUP, PICS, CUSTOM_FILE_CAPTION, P_TTI_SHOW_OFF, PROTECT_CONTENT, IMDB, SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, AUTO_FILTER, SEND_FILE_CHANNEL
+from info import ADMINS, AUTH_CHANNEL, LOG_CHANNEL, SUPPORT_CHAT, SUPPORT_GROUP, PICS, CUSTOM_FILE_CAPTION, P_TTI_SHOW_OFF, PROTECT_CONTENT, IMDB, SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, AUTO_FILTER
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid, ChatAdminRequired
@@ -102,7 +102,7 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"💥 {get_size(file.file_size)} 💫 {file.file_name}", callback_data=f'file#{file.file_id}'
+                    text=f"✨ {get_size(file.file_size)} ⚡️ {file.file_name}", callback_data=f'file#{file.file_id}'
                 )
             ]
             for file in files
@@ -111,17 +111,17 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"💥 {get_size(file.file_size)}",
+                    text=f"✨ {get_size(file.file_size)}",
                     callback_data=f'file#{file.file_id}',
                 ),
                 InlineKeyboardButton(
-                    text=f"💫 {file.file_name}", callback_data=f'file#{file.file_id}'
+                    text=f"⚡️ {file.file_name}", callback_data=f'file#{file.file_id}'
                 )
             ]
             for file in files
         ]
     btn.insert(0,
-        [InlineKeyboardButton(f"✅ {search} ✅", callback_data="search")]
+        [InlineKeyboardButton(f"✅ {search} ✅", callback_data="buttons")]
     )
 
     if 0 < offset <= 10:
@@ -135,14 +135,14 @@ async def next_page(bot, query):
         btn.append(
             [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
              InlineKeyboardButton(f"🗓 PAGES {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}",
-                                  callback_data="page")]
+                                  callback_data="buttons")]
         )
         btn.append(
             [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
         )
     elif off_set is None:
         btn.append(
-            [InlineKeyboardButton(f"🗓 PAGES {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+            [InlineKeyboardButton(f"🗓 PAGES {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="buttons"),
              InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")])
         btn.append(
             [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")])
@@ -150,7 +150,7 @@ async def next_page(bot, query):
         btn.append(
             [
                 InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-                InlineKeyboardButton(f"🗓 {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+                InlineKeyboardButton(f"🗓 {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="buttons"),
                 InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{req}_{key}_{n_offset}")
             ]
         )
@@ -417,7 +417,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             if AUTH_CHANNEL and not await is_subscribed(client, query):
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            if settings['botpm']:
+            elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             else:
@@ -479,23 +479,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.reply_to_message.delete()
         await query.message.delete()
 
-    elif query.data == "pages":
-        user = query.message.reply_to_message.from_user.id
-        if int(user) != 0 and query.from_user.id != int(user):
-            return await query.answer(f"Hello {query.from_user.first_name},\nDon't Click Other Results!", show_alert=True)
-        await query.answer(f"Hello {query.from_user.first_name},\nIf you don't see what you want on this page, Click on the next page.", show_alert=True)
-
-    elif query.data == "page":
-        user = query.message.reply_to_message.from_user.id
-        if int(user) != 0 and query.from_user.id != int(user):
-            return await query.answer(f"Hello {query.from_user.first_name},\nDon't Click Other Results!", show_alert=True)
-        await query.answer(f"Hello {query.from_user.first_name},\nNo more pages available!", show_alert=True)
-
-    elif query.data == "search":
-        user = query.message.reply_to_message.from_user.id
-        if int(user) != 0 and query.from_user.id != int(user):
-            return await query.answer(f"Hello {query.from_user.first_name},\nDon't Click Other Results!", show_alert=True)
-        await query.answer(f"Hello {query.from_user.first_name},\nClick the button below you want and start the bot.", show_alert=True)
+    elif query.data == "buttons":
+        await query.answer()
 
     elif query.data == "start":
         await query.answer('Welcome!')
@@ -591,11 +576,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Send File Channel', callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["send_file_channel"] else '❌ No',
-                                         callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}')
-                ],
-                [
                     InlineKeyboardButton('Bot Inbox', callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}'),
                     InlineKeyboardButton('✅ Yes' if settings["botpm"] else '❌ No',
                                          callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}')
@@ -672,11 +652,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Send File Channel', callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["send_file_channel"] else '❌ No',
-                                         callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}')
-                ],
-                [
                     InlineKeyboardButton('Bot Inbox', callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}'),
                     InlineKeyboardButton('✅ Yes' if settings["botpm"] else '❌ No',
                                          callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}')
@@ -751,11 +726,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
                     InlineKeyboardButton('Single' if settings["button"] else 'Double',
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('FILE', callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["send_file_channel"] else '❌ No',
-                                         callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('Bot Inbox', callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}'),
@@ -978,7 +948,7 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"💥 {get_size(file.file_size)} 💫 {file.file_name}", callback_data=f'{pre}#{file.file_id}'
+                    text=f"✨ {get_size(file.file_size)} ⚡️ {file.file_name}", callback_data=f'{pre}#{file.file_id}'
                 )
             ]
             for file in files
@@ -987,18 +957,18 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"💥 {get_size(file.file_size)}",
+                    text=f"✨ {get_size(file.file_size)}",
                     callback_data=f'{pre}#{file.file_id}',
                 ),
                 InlineKeyboardButton(
-                    text=f"💫 {file.file_name}",
+                    text=f"⚡️ {file.file_name}",
                     callback_data=f'{pre}#{file.file_id}',
                 )
             ]
             for file in files
         ]
     btn.insert(0,
-        [InlineKeyboardButton(f"✅ {search} ✅", callback_data="search")]
+        [InlineKeyboardButton(f"✅ {search} ✅", callback_data="buttons")]
     )
 
     if offset != "":
@@ -1006,7 +976,7 @@ async def auto_filter(client, msg, spoll=False):
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
         btn.append(
-            [InlineKeyboardButton(text=f"🗓 PAGES 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
+            [InlineKeyboardButton(text=f"🗓 PAGES 1 / {math.ceil(int(total_results) / 10)}", callback_data="buttons"),
              InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
         )
         btn.append(
@@ -1014,7 +984,7 @@ async def auto_filter(client, msg, spoll=False):
         )
     else:
         btn.append(
-            [InlineKeyboardButton(text="🗓 PAGES 1 / 1", callback_data="page")]
+            [InlineKeyboardButton(text="🗓 PAGES 1 / 1", callback_data="buttons")]
         )
         btn.append(
             [InlineKeyboardButton("❌ Close ❌", callback_data="close_data")]
@@ -1056,7 +1026,8 @@ async def auto_filter(client, msg, spoll=False):
         cap = f"✅ I Found: <code>{search}</code>\n\n🗣 Requested by: {message.from_user.mention}\n©️ Powered by: <b>{message.chat.title}</b>"
     if imdb and imdb.get('poster'):
         try:
-            await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
+                                          reply_markup=InlineKeyboardMarkup(btn))
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
