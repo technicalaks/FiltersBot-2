@@ -405,6 +405,16 @@ async def settings(client, message):
             ],
             [
                 InlineKeyboardButton(
+                    'FILE',
+                    callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{grp_id}'
+                ),
+                InlineKeyboardButton(
+                    'Single' if settings["send_file_channel"] else 'Double',
+                    callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{grp_id}'
+                )
+            ],
+            [
+                InlineKeyboardButton(
                     'Bot Inbox',
                     callback_data=f'setgs#botpm#{settings["botpm"]}#{grp_id}'
                 ),
