@@ -39,7 +39,7 @@ DATABASE_NAME = environ.get('DATABASE_NAME', "Cluster0")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Files')
 
 # Others
-REQUEST_CHANNEL = int(environ.get('REQUEST_CHANNEL', '-1001862488332'))
+REQUEST_GROUP = int(environ.get('REQUEST_CHANNEL', '-1001862488332'))
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001701705208'))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'https://t.me/SL_Filters_Bot_Support')
 AUTO_FILTER = is_enabled((environ.get('AUTO_FILTER', "True")), True)
