@@ -24,13 +24,13 @@ PICS = (environ.get('PICS', 'https://telegra.ph/file/58fef5cb458d5b29b0186.jpg h
 # Admins, Channels & Users
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5493832202').split()]
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001396095544 -1001622478032 -1001566642237 -1001805305525 -1001773156985').split()]
-auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
-AUTH_USERS = (auth_users + ADMINS) if auth_users else []
+
+
 auth_channel = environ.get('AUTH_CHANNEL', '-1001791560305')
-auth_grp = environ.get('AUTH_GROUP')
+
 support_group = environ.get('SUPPORT_GROUP', '-1001305756928')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
-AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
+
 SUPPORT_GROUP = int(support_group) if support_group and id_pattern.search(support_group) else None
 
 # MongoDB information
