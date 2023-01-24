@@ -420,7 +420,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            elif settings['send_file_channel']:
+            if settings['send_file_channel']:
                 sent_file = await client.send_cached_media(
                     chat_id=LOG_CHANNEL,
                     file_id=file_id,
