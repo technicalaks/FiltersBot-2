@@ -34,8 +34,8 @@ INDEX_REQ_CHANNEL = int(environ.get('INDEX_REQ_CHANNEL', LOG_CHANNEL))
 FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).split()]
 
 # Groups
-requests_group = environ.get('REQUESTS_GROUP', '')
-REQUESTS_GROUP = int(requests_group) if requests_group and id_pattern.search(requests_group) else None
+support_group = environ.get('SUPPORT_GROUP', '')
+SUPPORT_GROUP = int(support_group) if support_group and id_pattern.search(support_group) else None
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'https://t.me/SL_Filters_Bot_Support')
 
 # MongoDB information
