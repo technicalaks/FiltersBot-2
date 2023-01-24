@@ -37,7 +37,10 @@ async def give_filter(client, message):
             if settings["autofilter"]:
                 await auto_filter(client, message)
             else:
-                await message.reply_text('off')
+                k = await message.reply_text('Auto Filter Off! ❌')
+                await asyncio.sleep(10)
+                await message.delete()
+                await k.delete()
     else:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
             try:
@@ -63,7 +66,13 @@ async def give_filter(client, message):
         else:
             k = await manual_filters(client, message)
             if k == False:
-                await auto_filter(client, message) if settings["autofilter"] else None
+                if settings["autofilter"]:
+                    await auto_filter(client, message)
+                else:
+                    k = await message.reply_text('Auto Filter Off! ❌')
+                    await asyncio.sleep(10)
+                    await message.delete()
+                    await k.delete()
 
 
 @Client.on_callback_query(filters.regex(r"^next"))
@@ -570,6 +579,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if settings is not None:
             buttons = [
                 [
+                    InlineKeyboardButton('Auto Filter',
+                                         callback_data=f'setgs#autofilter#{settings["autofilter"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ Yes' if settings["autofilter"] else '❌ No',
+                                         callback_data=f'setgs#autofilter#{settings["autofilter"]}#{str(grp_id)}')
+                ],
+                [
                     InlineKeyboardButton('Filter Button',
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
                     InlineKeyboardButton('Single' if settings["button"] else 'Double',
@@ -639,6 +654,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
         if settings is not None:
             buttons = [
+                [
+                    InlineKeyboardButton('Auto Filter',
+                                         callback_data=f'setgs#autofilter#{settings["autofilter"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ Yes' if settings["autofilter"] else '❌ No',
+                                         callback_data=f'setgs#autofilter#{settings["autofilter"]}#{str(grp_id)}')
+                ],
                 [
                     InlineKeyboardButton('Filter Button',
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
@@ -714,12 +735,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#autofilter#{settings["autofilter"]}#{str(grp_id)}'),
                     InlineKeyboardButton('✅ Yes' if settings["autofilter"] else '❌ No',
                                          callback_data=f'setgs#autofilter#{settings["autofilter"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('Auto Delete',
-                                         callback_data=f'setgs#auto_delete#{settings["auto_delete"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('One Hour' if settings["auto_delete"] else '❌ No',
-                                         callback_data=f'setgs#auto_delete#{settings["auto_delete"]}#{str(grp_id)}')
                 ],
                 [
                     InlineKeyboardButton('Filter Button',
@@ -1026,26 +1041,20 @@ async def auto_filter(client, msg, spoll=False):
         cap = f"✅ I Found: <code>{search}</code>\n\n🗣 Requested by: {message.from_user.mention}\n©️ Powered by: <b>{message.chat.title}</b>"
     if imdb and imdb.get('poster'):
         try:
-            k = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
-                                          reply_markup=InlineKeyboardMarkup(btn))
-
+            await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
-            k = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
-
+            await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
         except Exception as e:
             logger.exception(e)
-            k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
-
+            await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
     else:
         if message.chat.id == SUPPORT_GROUP:
             buttons = [[InlineKeyboardButton('✨ Our Group ✨', url='https://t.me/SL_Films_World')]]
-            k = await message.reply_text(text=f"👋 Hello {message.from_user.mention},\n\n✅ I Found: {search}\n💯 Total Results: <code>{total_results}</code>\n\nAvailable In 👇", reply_markup=InlineKeyboardMarkup(buttons))
-
+            await message.reply_text(text=f"👋 Hello {message.from_user.mention},\n\n✅ I Found: {search}\n💯 Total Results: <code>{total_results}</code>\n\nAvailable In 👇", reply_markup=InlineKeyboardMarkup(buttons))
         else:
-            k = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
-
+            await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
     if spoll:
         await msg.message.delete()
 
