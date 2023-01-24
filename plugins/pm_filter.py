@@ -43,13 +43,8 @@ async def give_filter(client, message):
                 await k.delete()
     else:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
-            try:
-                invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
-            except ChatAdminRequired:
-                logger.error("Make sure Bot is admin in Forcesub channel")
-                return
             buttons = [[
-                InlineKeyboardButton("📢 Updates Channel 📢", url=invite_link.invite_link)
+                InlineKeyboardButton("📢 Updates Channel 📢", url='https://t.me/SL_Filters_Bot_Updates')
             ],[
                 InlineKeyboardButton("🔁 Request Again 🔁", callback_data="grp_checksub")
             ]]
@@ -764,14 +759,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("show_options"):
         ident, user_id, msg_id = query.data.split("#")
-        channel_id = query.message.chat.id
+        grp_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("✅ Accept ✅", callback_data=f"accept#{user_id}#{msg_id}")
         ],[
             InlineKeyboardButton("❌ Reject ❌", callback_data=f"reject#{user_id}#{msg_id}")
         ]]
-        st = await client.get_chat_member(channel_id, userid)
+        st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
         else:
@@ -779,7 +774,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("reject"):
         ident, user_id, msg_id = query.data.split("#")
-        channel_id = query.message.chat.id
+        grp_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("❌ Reject ❌", callback_data=f"rj_alert#{user_id}")
@@ -787,7 +782,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(channel_id, userid)
+        st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(user_id)
             request = query.message.text
@@ -803,7 +798,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("accept"):
         ident, user_id, msg_id = query.data.split("#")
-        channel_id = query.message.chat.id
+        grp_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("❌ Not Available ❌", callback_data=f"not_available#{user_id}#{msg_id}")
@@ -812,7 +807,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         ],[
             InlineKeyboardButton("🟢 Already Available 🟢", callback_data=f"already_available#{user_id}#{msg_id}")
         ]]
-        st = await client.get_chat_member(channel_id, userid)
+        st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             await query.message.edit_reply_markup(InlineKeyboardMarkup(buttons))
         else:
@@ -820,7 +815,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("not_available"):
         ident, user_id, msg_id = query.data.split("#")
-        channel_id = query.message.chat.id
+        grp_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("❌ Not Available ❌", callback_data=f"na_alert#{user_id}")
@@ -828,7 +823,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(channel_id, userid)
+        st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(user_id)
             request = query.message.text
@@ -844,7 +839,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("uploaded"):
         ident, user_id, msg_id = query.data.split("#")
-        channel_id = query.message.chat.id
+        grp_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("✅ Uploaded ✅", callback_data=f"ul_alert#{user_id}")
@@ -852,7 +847,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(channel_id, userid)
+        st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(user_id)
             request = query.message.text
@@ -868,7 +863,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data.startswith("already_available"):
         ident, user_id, msg_id = query.data.split("#")
-        channel_id = query.message.chat.id
+        grp_id = query.message.chat.id
         userid = query.from_user.id
         buttons = [[
             InlineKeyboardButton("🟢 Already Available 🟢", callback_data=f"aa_alert#{user_id}")
@@ -876,7 +871,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         btn = [[
             InlineKeyboardButton("View Status", url=f"{query.message.link}")
         ]]
-        st = await client.get_chat_member(channel_id, userid)
+        st = await client.get_chat_member(grp_id, userid)
         if (st.status == enums.ChatMemberStatus.ADMINISTRATOR) or (st.status == enums.ChatMemberStatus.OWNER):
             user = await client.get_users(user_id)
             request = query.message.text
