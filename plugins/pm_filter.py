@@ -762,7 +762,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Send File Channel', callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('FILE', callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}'),
                     InlineKeyboardButton('✅ Yes' if settings["send_file_channel"] else '❌ No',
                                          callback_data=f'setgs#send_file_channel#{settings["send_file_channel"]}#{str(grp_id)}')
                 ],
