@@ -52,5 +52,5 @@ async def showid(client, message):
             quote=True
         )
 
-    if chat_type == enums.ChatType.CHANNEL:
+    elif chat_type == enums.ChatType.CHANNEL:
         await message.reply_text(f'★ Channel ID: <code>{message.chat.id}</code>')
